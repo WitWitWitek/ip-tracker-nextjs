@@ -1,23 +1,13 @@
-import { useRef, useState } from 'react'
-import dynamic from "next/dynamic"
+import { useRef } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { coordsActions } from '../../context/coordsSlice'
 
-// components
-import Board from '../Board/Board'
-const Map = dynamic(() => import("../Map/Map"), { ssr:false })
+// components 
 
 export default function IpForm() {
+    const coords = useSelector(state => state.coords);
+    const dispatch = useDispatch()
     const inputValue = useRef('')
-    const [data, setData] = useState({
-        ip: '192.212.174.101',
-        location: {
-            region: 'Ohio',
-            country: 'Netherlands',
-            timezone: '01:00',
-            lat: 37.48032,
-            lng: -122.14888
-        },
-        isp: 'Dummy Data',
-    })
   
     const showIpDetails = async (e) => {
         e.preventDefault()
@@ -29,33 +19,44 @@ export default function IpForm() {
                 'Content-Type': 'application/json'
             }
         }).then(res => res.json()).then(dataFetched => {
+            console.log(dataFetched);
             const { data } = dataFetched
-            setData(data)
+            dispatch(coordsActions.updateCoords(data));
         })
     }
 
     const findYourLocation = e => {
         e.preventDefault()
         navigator.geolocation.getCurrentPosition(success => {
-            setData({
-                ...data,
+            dispatch(coordsActions.updateCoords({
+                ...coords,
                 location: {
-                    ...data.location,
+                    ...coords.location,
                     lat: success.coords.latitude,
                     lng: success.coords.longitude
-                }
-            })
+                },
+                isp: 'TEST TEST TEST'
+            }))
         })
     }
 
     return (
-        <form>
-            <input type="text" ref={inputValue} />
-            <button type='submit' onClick={showIpDetails}>Submit</button>
-            <button type='submit' onClick={findYourLocation}>Find your location</button>
-            <Board data={data} />
-            <Map data={data} />
-        </form>
+        <div className='ip-tracker__form-container'>
+            <form className='ip-tracker__form'>
+                <input 
+                    className='ip-tracker__input'
+                    type="text"
+                    placeholder='Search for any IP address or domain'
+                    ref={inputValue} 
+                />
+                <button className='ip-tracker__form-btn' type='submit' onClick={showIpDetails}>
+                    <img src="/icon-arrow.svg" alt="" />
+                </button>
+                <button className='ip-tracker__form-btn-user' type='submit' onClick={findYourLocation}>
+                    <img src="/crosshair.svg" alt="" />
+                </button>
+            </form>
+        </div>
     )
 }
 

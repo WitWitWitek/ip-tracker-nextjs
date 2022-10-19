@@ -1,30 +1,158 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
+@use './colors' as *;
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap');
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+html {
+  font-family: 'Rubik', sans-serif;
+  font-size: 62.5%;
+}
+
+.ip-tracker {
+  height: 100vh;
+  position: relative;
+
+  &__header {
+    background-image: url('/pattern-bg.png');
+    background-position: center;
+    background-size: cover;
+    padding: 2rem;
+    height: 30vh;
+    width: 100%;
+    h1 {
+      font-weight: 500;
+      font-size: 3rem;
+      text-align: center;
+      margin: 0px auto;
+      color: #fff;
+    }
   }
-  body {
-    color: white;
-    background: black;
+
+  &__form-container {
+    width: 100%;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    margin: 1.5rem auto;
+  }
+
+  &__form {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 1.5rem;  
+  }
+
+  &__form-btn {
+    padding: 1.5rem;
+    background-color: #000;
+    border: none;
+    cursor: pointer;
+
+    &-user {
+      background-color: #000;
+      color: #fff;
+      position: absolute;
+      z-index: 10;
+      bottom: 2rem;
+      left: 2rem;
+      padding: 1.2rem;
+      border-radius: 1.5rem;
+      border: none;
+      cursor: pointer;
+    }
+  }
+
+  &__board {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    z-index: 2;
+    padding: 1.5rem;  
+    list-style-type: none;
+    background-color: $boardColor;
+    border-radius: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &-item {
+      text-align: center;
+      margin: 1rem auto;
+    }
+
+    &-title {
+      padding: 0.3rem;
+      color: $DarkGray;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.2rem;
+    }
+
+    &-value {
+      padding: 0.3rem;
+      color: $veryDarkGray;
+      font-weight: 700;
+      font-size: 2.3rem;
+    }
+
   }
 }
 
 #map {
-  height: 60vh;
+  height: 70vh;
+}
+
+@media screen and (min-width: 576px) {
+  .ip-tracker {
+    &__form-container {
+      width: 50%;
+    }
+    &__board {
+      width: 80%;
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .ip-tracker {
+    &__header {
+      h1 {
+        font-size: 4rem;
+        margin: 1rem auto;
+      }
+    }
+
+    &__form-container {
+      margin: 4rem auto;
+    }
+
+    &__board {
+      flex-direction: row;
+      padding: 2.5rem;
+      &-title {
+        font-size: 1.3rem;
+      }
+      &-value {
+        font-size: 2rem;
+      }
+
+      &-item {
+        padding: 1.5rem 2.5rem;
+        margin: 0;
+        text-align: left;
+        border-right: rgba($DarkGray, 0.3) 1px solid;
+      }
+      &-item:last-child {
+        border-right: transparent 1px solid;
+      } 
+    }
+  }
 }
