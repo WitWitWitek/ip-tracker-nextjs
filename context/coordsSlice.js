@@ -3,15 +3,15 @@ import { createSlice } from '@reduxjs/toolkit'
 const coordsSlice = createSlice({
     name: 'coords',
     initialState: {
-        ip: '192.212.174.101',
+        ip: '108.177.16.0',
         location: {
-            region: 'Ohio',
-            country: 'Netherlands',
-            timezone: '01:00',
-            lat: 37.48032,
-            lng: -122.14888
+            region: "California",
+            country: "US",
+            timezone: "-07:00",
+            lat: 37.41889,
+            lng: -122.10361
         },
-        isp: 'WITEK WITEK',
+        isp: "Google LLC",
     },
     reducers: {
         updateCoords(state, action) {

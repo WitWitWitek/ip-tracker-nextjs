@@ -1,4 +1,5 @@
 @use './colors' as *;
+@use './auth.scss' as *;
 
 * {
   margin: 0;
@@ -21,32 +22,45 @@ html {
     background-position: center;
     background-size: cover;
     padding: 2rem;
-    height: 30vh;
+    height: 35vh;
     width: 100%;
     h1 {
       font-weight: 500;
       font-size: 3rem;
       text-align: center;
       margin: 0px auto;
-      color: #fff;
+      color: $boardColor;
     }
   }
 
   &__form-container {
     width: 100%;
     border-radius: 1.5rem;
-    overflow: hidden;
     margin: 1.5rem auto;
+    overflow: hidden;
   }
 
   &__form {
+    position: relative;
     display: flex;
     justify-content: center;
   }
 
   &__input {
+    outline: none;
     width: 100%;
-    padding: 1.5rem;  
+    padding: 1.5rem;
+    border-top-left-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
+    border: 3px solid transparent;
+    &:focus {
+      border: 3px solid goldenrod;
+      background-color: lightyellow;
+    }
+    &-error {
+      background-color: pink;
+      border: 3px solid red;
+    }  
   }
 
   &__form-btn {
@@ -57,7 +71,7 @@ html {
 
     &-user {
       background-color: #000;
-      color: #fff;
+      color: $boardColor;
       position: absolute;
       z-index: 10;
       bottom: 2rem;
@@ -85,7 +99,7 @@ html {
 
     &-item {
       text-align: center;
-      margin: 1rem auto;
+      margin: 0.1rem auto;
     }
 
     &-title {
@@ -107,7 +121,7 @@ html {
 }
 
 #map {
-  height: 70vh;
+  height: 65vh;
 }
 
 @media screen and (min-width: 576px) {
