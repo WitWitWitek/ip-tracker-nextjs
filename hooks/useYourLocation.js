@@ -21,7 +21,11 @@ export const useYourLocation = () => {
                 },
                 isp
             }))
-        })
+        },
+        err => alert(err.message)
+        )
+
+
         
     }
 

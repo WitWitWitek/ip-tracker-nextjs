@@ -45,7 +45,7 @@
             border: 3px solid goldenrod;
             background-color: lightyellow;
         }
-        &-error {
+        &.error {
             background-color: pink;
             border: 3px solid red;
         }  
@@ -65,7 +65,23 @@
             background-color: $boardColor;
             color: $DarkGray;
         }
-    }    
+    }
+    
+    &__button {
+        border: 2px solid $boardColor;
+        width: 100%;
+        height: 2.5rem;
+        margin: 1rem auto;
+        border-radius: 1.5rem;
+        background-color: transparent;
+        color: $boardColor;
+        cursor: pointer;
+        &:hover {
+            border: $DarkGray 1px solid;
+            background-color: $boardColor;
+            color: $DarkGray;
+        }
+    }        
 }
 
 @media screen and (min-width: 576px) {

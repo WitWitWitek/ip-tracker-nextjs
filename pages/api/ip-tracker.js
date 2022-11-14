@@ -40,8 +40,14 @@ export default async function handler (req, res) {
         }
 
         const response = await fetch(connectionStringUpdated)
+
+        if (!response.ok) {
+            res.status(422).json({message: 'Invalid input. Try again.'})
+            return;
+        }
+        
         const data = await response.json()
-        res.status(201).json({message: 'Succesfully fetched IP data!', data: data})  
+        res.status(201).json({message: 'Successfully fetched IP data!', data: data})  
     }
 
 

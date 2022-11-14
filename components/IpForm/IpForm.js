@@ -31,13 +31,19 @@ export default function IpForm() {
                     className={`${iPerror ? 'ip-tracker__input-error' : ''} ip-tracker__input`}
                     type="text"
                     placeholder={iPerror ? iPerror : 'Search for any IP address or domain.'}
+                    
                     ref={inputValue} 
                 />
-                <button className='ip-tracker__form-btn' type='submit' onClick={showIpDetails}>
+                <button 
+                    className='ip-tracker__form-btn' 
+                    type='submit' 
+                    onClick={showIpDetails} 
+                    title="Search for any IP address or domain."
+                >
                     <img src="/icon-arrow.svg" alt="" />
                 </button>
             </form>
-            <button className='ip-tracker__form-btn-user' onClick={showUserPosition} >
+            <button className='ip-tracker__form-btn-user' onClick={showUserPosition} title="Find Your location and IP address">
                     <img src="/crosshair.svg" alt="crosshair icon" />
             </button>
         </div>

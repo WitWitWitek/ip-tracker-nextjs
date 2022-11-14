@@ -12,11 +12,10 @@ export default NextAuth({
                 const usersCollection = client.db().collection('users');
                 const user = await usersCollection.findOne({email: credentials.email})
 
-
                 if (!user) {
                     throw new Error('No user found!');
                 }
-
+               
                 const isValid = await verifyPassword(credentials.password, user.password);
 
                 if (!isValid) {
@@ -24,7 +23,11 @@ export default NextAuth({
                 }
 
                 client.close();
-                return { email: user.email }
+
+                return {
+                    name: user.username,
+                    email: user.email
+                }
             }
         })
     ]

@@ -1,6 +1,6 @@
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import dynamic from "next/dynamic"
 
@@ -8,21 +8,25 @@ import dynamic from "next/dynamic"
 import IpForm from '../components/IpForm/IpForm'
 import Head from 'next/head'
 import Board from '../components/Board/Board'
+import Menu from '../components/Menu/Menu';
 const Map = dynamic(() => import("../components/Map/Map"), { ssr:false })
 
 
-export default function Home() { 
-  const { status } = useSession()
+export default function HomePage() { 
+  const { data: session, status } = useSession()
   const coords = useSelector(state => state.coords);
   const router = useRouter()
+  const [userId, setUserId] = useState(null)
   
-  const logOut = () => signOut()
 
   useEffect(() => {
     if (status !== 'authenticated') {
       router.replace('/auth')
     }
-  }, [status])
+    if (status === 'authenticated') {
+      setUserId(session.user.name)
+    }
+  }, [status, session, router])
   
 
   return (
@@ -32,10 +36,9 @@ export default function Home() {
       </Head>
       <main className='ip-tracker'>
           <div className='ip-tracker__header'>
-            <h1>IP Adress Tracker</h1>
-            <button onClick={logOut}>log out</button>
+            <Menu userId={userId} />
             <IpForm />
-            <Board data={coords} />
+            <Board ipData={coords} />
           </div>
           <Map data={coords} />
       </main>

@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.6",
     "bcryptjs": "^2.4.3",
+    "hamburger-react": "^2.5.0",
     "leaflet": "^1.9.2",
     "mongodb": "^4.11.0",
     "next": "12.3.1",

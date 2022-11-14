@@ -1,33 +1,53 @@
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import UserPage from "../../components/UserPage/UserPage";
 import connectToDatabase from "../../lib/db"
 
 export async function getStaticPaths(context) {
     const client = await connectToDatabase();
     const usersCollection = client.db().collection('users');
-    const user = await usersCollection.find().toArray()
+    const users = await usersCollection.find().toArray()
 
-    console.log(user);
+    const paths = users.map(user => {
+        return {
+            params: { user: user.username }
+        }
+    })
 
-    // find all users and create static pages for them.
-    // exctract id with MongoObjectId and create dynamic paths :)
+    client.close();
     return {
-        paths: [
-            { params: { user: '6353e5919f1e9e601c5bf160' } }
-        ],
+        paths,
         fallback: true
     }
 }
 
 export async function getStaticProps({params}) {
+    const client = await connectToDatabase();
+    const usersCollection = client.db().collection('users');
+    const { ipItems } = await usersCollection.findOne({username: params.user})
+
+    client.close();
     return {
         props: {
-            user: params.user
-        }
+            username: params.user,
+            ipData: ipItems
+        },
+        revalidate: 10,
     }
 }
 
 
-export default function User(props) {
-  return (
-    <div>{props.user}</div>
-  )
+export default function User({ipData, username}) {
+    const router = useRouter()
+    const { status } = useSession()
+    useEffect(() => {
+        if (status !== 'authenticated') {
+            router.replace('/auth/')
+        }
+    }, [status, router])
+  
+    return (
+        <UserPage ipData={ipData} username={username} />
+    )
 }
