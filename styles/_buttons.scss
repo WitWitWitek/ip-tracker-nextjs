@@ -1,0 +1,36 @@
+@use './colors' as *;
+
+@mixin board-btn($right: 10px) {
+    position: absolute;
+    top: 10px;
+    right: $right;
+    border: none;
+    background-color: transparent;
+    padding: 0.4rem;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+@mixin menu-btn {
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.3rem;
+    cursor: pointer;
+    border: 2px solid $boardColor;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    color: $boardColor;
+    transition: background-color .4s;
+    background-color: transparent;
+    transition: background-color .4s;
+}
+
+@mixin menu-btn-hover {
+    border: 2px solid $boardColor;
+    border-radius: 1rem;
+    padding: 1rem 2rem;
+    color: $veryDarkGray;
+    background-color: $boardColor;
+}

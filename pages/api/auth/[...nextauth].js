@@ -30,5 +30,12 @@ export default NextAuth({
                 }
             }
         })
-    ]
+    ],
+    secret: process.env.SECRET,
+    session: {
+        maxAge: 10 * 60,
+    },
+    jwt: {
+        maxAge: 10 * 60,
+    }
 })

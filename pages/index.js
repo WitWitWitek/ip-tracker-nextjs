@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/react';
 import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect, useState} from 'react';
 import { useRouter } from 'next/router'
 import dynamic from "next/dynamic"
 
@@ -16,18 +16,18 @@ export default function HomePage() {
   const { data: session, status } = useSession()
   const coords = useSelector(state => state.coords);
   const router = useRouter()
-  const [userId, setUserId] = useState(null)
-  
+  const [userId, setUserId] = useState(null);
+  const [isAuth, setIsAuth] = useState(false)
 
   useEffect(() => {
+    console.log(status);
     if (status !== 'authenticated') {
-      router.replace('/auth')
+      router.replace('/auth');
     }
     if (status === 'authenticated') {
       setUserId(session.user.name)
     }
-  }, [status, session, router])
-  
+  }, [])
 
   return (
    <>

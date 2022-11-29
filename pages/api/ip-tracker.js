@@ -22,10 +22,10 @@ export default async function handler (req, res) {
             return;
         }
         
-        if (userInputValue.includes(':') && userInputValue.split(':').length < 4) {
-            res.status(422).json({message: 'Invalid input. Try again.'})
-            return;
-        }
+        // if (userInputValue.includes(':') && userInputValue.split(':').length < 4) {
+        //     res.status(422).json({message: 'Invalid input. Try again.'})
+        //     return;
+        // }
 
         try {
             usersInputDomain = new URL(userInputValue)

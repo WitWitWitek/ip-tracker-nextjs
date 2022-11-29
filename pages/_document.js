@@ -1,6 +1,5 @@
 // pages/_document.js
 import { Html, Head, Main, NextScript } from 'next/document'
-
 export default function Document() {
   return (
     <Html>
@@ -14,7 +13,7 @@ export default function Document() {
         <script 
           src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
           integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg="
-          crossOrigin=""></script>
+          crossOrigin="" defer></script>
       </Head>
       <body>
         <Main />

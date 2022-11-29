@@ -1,4 +1,5 @@
 @use './colors' as *;
+@use './buttons' as *;
 
 .ip-tracker {
     &__user-page {
@@ -8,10 +9,19 @@
         background-color: #333;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         padding: 2rem;
         h1 {
+            width: 100%;
+            font-weight: 500;
+            font-size: 3rem;
+            text-align: center;
+            margin: 0px auto;
+            color: $boardColor;
+        }
+        h2 {
+            width: 100%;
             font-weight: 500;
             font-size: 3rem;
             text-align: center;
@@ -26,5 +36,60 @@
             grid-template-columns: 1fr;
             gap: 2rem;
         }
+
+        &-btn {
+            @include board-btn;
+            &--show {
+                @include board-btn(45px);
+                &:hover {
+                    background-color: $DarkGray;
+                    img {
+                      filter: invert(1);
+                    }
+                  }
+            }
+            &:hover {
+              background-color: $DarkGray;
+              img {
+                filter: invert(1);
+              }
+            }
+            img {
+              width: 100%;
+              height: 100%;
+            }
+        }
+
+        &-menu {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0px;
+            &-btn {
+                @include menu-btn;
+                flex: 0 1 30%;
+                &:hover {
+                    @include menu-btn-hover;
+                }
+            }
+        }
+
+        &-form-wrapper {
+            height: min-content;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            animation: show-password-form 0.5s forwards;
+        }
+    }
+}
+
+@keyframes show-password-form {
+    from {
+        opacity: 0;
+        transform: translateY(-5%);
+    } to {
+        opacity: 1;
+        transform: translateY(0%);
     }
 }

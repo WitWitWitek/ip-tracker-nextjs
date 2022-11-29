@@ -1,11 +1,11 @@
-import { useSession } from "next-auth/react"
-import { useColletion } from "../../hooks/useCollection"
-import { useSelector } from "react-redux"
+import { useSession } from "next-auth/react";
+import { useColletion } from "../../hooks/useCollection";
+import { useRouter } from "next/router";
 
 export default function DeleteItemBtn({selectedIpObject}) {
     const { deleteItemFromCollection } = useColletion()
     const { data: session } = useSession()
-
+    const router = useRouter()
 
     const deleteClickHandler = async () => {
         const user = session.user.name
@@ -13,10 +13,13 @@ export default function DeleteItemBtn({selectedIpObject}) {
             user,
             ipAddressData: {...selectedIpObject}
         }
-        deleteItemFromCollection(ipAddressDataToDelete)
+        await deleteItemFromCollection(ipAddressDataToDelete);
+        router.reload(window.location.pathname)
     }
 
     return (
-        <button onClick={deleteClickHandler} title='Remove item from favourites.'>Delete</button>
+        <button className="ip-tracker__user-page-btn" onClick={deleteClickHandler} title='Remove item from favourites.'>
+            <img src="/trash-can.svg" alt="delete button icon" title="Delete this ip address from favourites."/>
+        </button>
     )
 }

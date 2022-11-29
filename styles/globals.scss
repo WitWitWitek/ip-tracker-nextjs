@@ -1,6 +1,7 @@
 @use './colors' as *;
 @use './auth.scss' as *;
 @use './user.scss' as *;
+@use './buttons' as *;
 
 * {
   margin: 0;
@@ -202,14 +203,7 @@ html {
     }
 
     &-add-item-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      border: none;
-      background-color: transparent;
-      padding: 0.4rem;
-      border-radius: 1rem;
-      cursor: pointer;
+      @include board-btn;
       &:hover {
         background-color: $DarkGray;
         img {
@@ -264,27 +258,10 @@ html {
           margin-bottom: 1px 0px;
         }
         &-item-btn {
-          width: 100%;
-          font-size: 1rem;
-          font-weight: 700;
-          margin: 0;
-          letter-spacing: 0.3rem;
-          cursor: pointer;
-          border: 2px solid $boardColor;
-          border-radius: 1rem;
-          padding: 1rem 2rem;
-          color: $boardColor;
-          transition: background-color .4s;
-          background-color: transparent;
-          transition: background-color .4s;
+          @include menu-btn;
           &:hover {
-            border: 2px solid $boardColor;
-            border-radius: 1rem;
-            padding: 1rem 2rem;
-            color: $veryDarkGray;
-            background-color: $boardColor;
+            @include menu-btn-hover;
           }
-          
         }
       }
     }

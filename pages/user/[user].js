@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import Head from "next/head";
 import UserPage from "../../components/UserPage/UserPage";
 import connectToDatabase from "../../lib/db"
 
@@ -33,7 +34,7 @@ export async function getStaticProps({params}) {
             username: params.user,
             ipData: ipItems
         },
-        revalidate: 10,
+        revalidate: 1,
     }
 }
 
@@ -43,11 +44,16 @@ export default function User({ipData, username}) {
     const { status } = useSession()
     useEffect(() => {
         if (status !== 'authenticated') {
-            router.replace('/auth/')
+            router.replace('/auth')
         }
-    }, [status, router])
+    }, [])
   
     return (
+        <>
+        <Head>
+            <title>IP Adress Tracker | User Page</title>
+        </Head>
         <UserPage ipData={ipData} username={username} />
+        </>
     )
 }

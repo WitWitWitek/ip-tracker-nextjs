@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { coordsActions } from "../../context/coordsSlice";
 import AddItemBtn from "../AddItemBtn/AddItemBtn";
 import DeleteItemBtn from "../DeleteItemBtn/DeleteItemBtn";
+import ShowOnMapBtn from "../ShowOnMapBtn/ShowOnMapBtn";
 
 export default function Board({ipData}) {
     const router = useRouter()
@@ -33,7 +34,7 @@ export default function Board({ipData}) {
             </li>
             {router.pathname.includes('/user/')  && (
                 <li className='ip-tracker__board-item'>
-                    <button onClick={loadToMapHandler}>load to map</button>
+                    <ShowOnMapBtn loadToMapHandler={loadToMapHandler}/>
                     <DeleteItemBtn selectedIpObject={ipData} />
                 </li>
             )}
