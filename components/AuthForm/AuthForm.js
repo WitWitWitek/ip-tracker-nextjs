@@ -1,17 +1,14 @@
-import { useRef, useEffect } from "react"
-import { signIn, useSession } from 'next-auth/react'
-import { useRouter } from 'next/router'
+import { useRef } from "react"
 import { useState } from "react"
-import { createUser } from "../../lib/createUser"
+import { useSignIn } from "../../hooks/useSignIn"
+import { useSignUp } from '../../hooks/useSignUp'
 
 export default function AuthForm() {
     const [isLogin, setIsLogin] = useState(true)
     const [error, setError] = useState(null)
-    const [userCreated, setUserCreaed] = useState(null)
-
-    const { data: session, status } = useSession()
-    const router = useRouter()
-
+    useSignUp
+    const { signInError, signInSuccess, signInHandler } = useSignIn()
+    const { signUpError, signUpSuccess, signUpHandler} = useSignUp()
     const usernameInputRef = useRef()
     const emailInputRef = useRef()
     const passwordInputRef = useRef()
@@ -19,53 +16,29 @@ export default function AuthForm() {
 
     const switchAuthFormHandler = () => setIsLogin(prevMode => !prevMode)
 
-    const SubmitHandler = async e => {
+    const submitHandler = async e => {
         e.preventDefault()
-        setUserCreaed(null)
         const enteredEmail = emailInputRef.current.value;
         const enteredPassword = passwordInputRef.current.value;    
-
+        
         if (isLogin) {
-            const userLoggedIn = await signIn('credentials', {
-                redirect: false,
-                email: enteredEmail,
-                password: enteredPassword
-            })
+            await signInHandler(enteredEmail, enteredPassword);
         } else {
             const enteredUsername = usernameInputRef.current.value;
-            try {
-                setError(null);
-                const result = await createUser(
-                    enteredUsername, enteredEmail, enteredPassword
-                )
-                if (result) {
-                    setIsLogin(true)
-                    setUserCreaed(result.message)
-                }
-            } catch (err) {
-                setError(err.message || 'Something went wrong.');
-            }
+            await signUpHandler(enteredUsername, enteredEmail, enteredPassword)
             usernameInputRef.current.value = ''
         }
-
         emailInputRef.current.value = ''
         passwordInputRef.current.value = ''
     }
 
-    useEffect(() => {
-      if (status === 'authenticated') {
-        router.push('/')
-      }
-    }, [status])
-    
-
-    const authFormClass = `auth-form__form-input ${error ? 'error' : ''}`
+    const authFormClass = `auth-form__form-input ${(signInError && isLogin) || (signUpError && !isLogin) ? 'input-error' : ''}`
 
     return (
         <section className="auth-form">
            <div className="auth-form__container">
                 <h1>{`${isLogin ? 'Login' : 'Sign up'}  to IP Tracker`}</h1>
-                <form onSubmit={SubmitHandler}>
+                <form onSubmit={submitHandler}>
                     {!isLogin && (
                     <div className="auth-form__form-group">
                         <label htmlFor="username" className="auth-form__form-label">Username</label>
@@ -90,8 +63,10 @@ export default function AuthForm() {
                     >
                     {isLogin ? 'Create new account' : 'Login with existing account'}          
                 </button>
-                {error && <p className="ip-tracker-error-text">{error}</p>}
-                {userCreated && <p style={{textAlign: 'center'}}>{userCreated}</p>}
+                {signInError && isLogin && <p className="auth-form__auth-error">{signInError}</p>}
+                {signUpError && !isLogin && <p className="auth-form__auth-error">{signUpError}</p>}
+                {signInSuccess && isLogin && <p className="auth-form__auth-success">{signInSuccess}</p>}
+                {signUpSuccess && !isLogin && <p className="auth-form__auth-success">{signUpSuccess}</p>}
            </div>
         </section>
     )

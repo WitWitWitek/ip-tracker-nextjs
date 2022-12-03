@@ -31,8 +31,8 @@ export default function Map({data}) {
         <div id="map">
             <MapContainer 
                   center={coordinates} 
-                  zoom={13} 
-                  scrollWheelZoom={false}
+                  zoom={12} 
+                  scrollWheelZoom={true}
                   style={{height: "100%", width: "100%", zIndex:'0'}}
                   zoomControl={false}
               >
@@ -42,7 +42,10 @@ export default function Map({data}) {
                   />
                 <Marker position={coordinates} icon={getIcon(40)}>
                     <Popup>
-                      {isp} <br /> {`${location.region}, ${location.country}`}
+                      <div className="ip-tracker__popup-content">
+                        <p className="ip-tracker__popup-content--isp">{isp}</p>
+                        <p>{`${location.region}, ${location.country}`}</p>
+                      </div>
                     </Popup>
                 </Marker>
                 <ZoomControl position='bottomright' />

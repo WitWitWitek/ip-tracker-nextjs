@@ -1,10 +1,12 @@
 import { useSession } from "next-auth/react";
 import { useColletion } from "../../hooks/useCollection";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 export default function DeleteItemBtn({selectedIpObject}) {
     const { deleteItemFromCollection } = useColletion()
     const { data: session } = useSession()
+    const { error } = useSelector(state => state.alert)
     const router = useRouter()
 
     const deleteClickHandler = async () => {
@@ -14,7 +16,7 @@ export default function DeleteItemBtn({selectedIpObject}) {
             ipAddressData: {...selectedIpObject}
         }
         await deleteItemFromCollection(ipAddressDataToDelete);
-        router.reload(window.location.pathname)
+        if (!error) router.reload(window.location.pathname)
     }
 
     return (

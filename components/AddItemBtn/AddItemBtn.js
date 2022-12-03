@@ -1,14 +1,11 @@
 import { useSession } from "next-auth/react"
 import { useColletion } from "../../hooks/useCollection"
 import { useSelector } from "react-redux"
-import { useRouter } from "next/router"
 
 export default function AddItemBtn() {
     const currentIpAddressData = useSelector(state => state.coords)
     const { addItemToCollection } = useColletion()
     const { data: session } = useSession()
-    const router = useRouter()
-
 
     const addClickHandler = async () => {
         const user = session.user.name
@@ -16,8 +13,7 @@ export default function AddItemBtn() {
             user,
             ipAddressData: {...currentIpAddressData}
         }
-        await addItemToCollection(currentIpAddressDataObject)
-        router.push(`/user/${user}`)
+        await addItemToCollection(currentIpAddressDataObject);
     }
 
     return (

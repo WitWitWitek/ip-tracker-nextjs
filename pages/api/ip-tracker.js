@@ -21,11 +21,6 @@ export default async function handler (req, res) {
             res.status(422).json({message: 'Invalid input. Try again.'})
             return;
         }
-        
-        // if (userInputValue.includes(':') && userInputValue.split(':').length < 4) {
-        //     res.status(422).json({message: 'Invalid input. Try again.'})
-        //     return;
-        // }
 
         try {
             usersInputDomain = new URL(userInputValue)
@@ -46,8 +41,8 @@ export default async function handler (req, res) {
             return;
         }
         
-        const data = await response.json()
-        res.status(201).json({message: 'Successfully fetched IP data!', data: data})  
+        const ipData = await response.json()
+        res.status(201).json({message: 'Successfully fetched IP data!', ipData: ipData})  
     }
 
 

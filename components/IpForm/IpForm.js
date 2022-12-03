@@ -1,14 +1,10 @@
-import { useRef, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
-import { coordsActions } from '../../context/coordsSlice'
+import { useRef } from 'react'
 import { useIpDetails } from '../../hooks/useIpDetails';
 import { useYourLocation } from '../../hooks/useYourLocation'
 
-// components 
-
 export default function IpForm() {
     const { setUserPosition } = useYourLocation()
-    const { fetchIpDetails, iPerror } = useIpDetails()
+    const { fetchIpDetails, ipError } = useIpDetails()
     const inputValue = useRef('')
   
     const showIpDetails = e => {
@@ -28,10 +24,9 @@ export default function IpForm() {
         <div className='ip-tracker__form-container'>
             <form className='ip-tracker__form'>
                 <input 
-                    className={`${iPerror ? 'ip-tracker__input-error' : ''} ip-tracker__input`}
+                    className={`${ipError ? 'ip-tracker__input-error' : ''} ip-tracker__input`}
                     type="text"
-                    placeholder={iPerror ? iPerror : 'Search for any IP address or domain.'}
-                    
+                    placeholder={ipError ? ipError : 'Search for any IP address or domain.'}
                     ref={inputValue} 
                 />
                 <button 

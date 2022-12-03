@@ -6,7 +6,7 @@ import { Divide as Hamburger } from 'hamburger-react'
 export default function Menu({userId}) {
     const [menuOpen, setMenuOpen] = useState(false)
     const toggleMenuOpen = () => setMenuOpen(prevMenuState => !prevMenuState)
-    const logOut = () => signOut()
+    const logOut = () => signOut({redirect: true, callbackUrl: '/auth'})
 
     return (
         <>

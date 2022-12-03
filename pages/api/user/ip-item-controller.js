@@ -21,7 +21,7 @@ export default async function handler (req, res) {
 
         const ipAddressesArray = [...userExists.ipItems]
 
-        res.status(201).json({message: 'Ip list successfully fetched!', data: ipAddressesArray})
+        res.status(201).json({message: 'Ip list successfully fetched!', ipAddressesData: ipAddressesArray})
         client.close()
 
     }
@@ -29,7 +29,6 @@ export default async function handler (req, res) {
 
     if (req.method === 'POST') {
         const {user, ipAddressData} = req.body
-        // validation
 
         const client = await connectToDatabase()
         const usersCollection = client.db().collection('users')
@@ -59,7 +58,6 @@ export default async function handler (req, res) {
 
     if (req.method === 'DELETE') {
         const {user, ipAddressData} = req.body
-        // validation
 
         const client = await connectToDatabase()
         const usersCollection = client.db().collection('users')
@@ -76,7 +74,6 @@ export default async function handler (req, res) {
         }
 
         const ipDeleted = userExists.ipItems.filter(ipItem => ipItem.ip !== ipAddressData.ip);
-        console.log(ipAddressData.ip);
         const updateUsersIpAddresses = await usersCollection.updateOne(
             {username: user}, 
             {$set: {ipItems: ipDeleted}}

@@ -1,41 +1,57 @@
+import { setError, setSuccess } from "../context/alertSlice";
+import { useDispatch } from "react-redux";
 import { useState } from "react"
 
 export const useColletion = () => {
-    const [ipData, setIpData] = useState(null)
+    const dispatch = useDispatch()
+    const [ipData, setIpData] = useState(null);
 
     const getItemsFromCollection = async () => {
-        const result = await fetch('/api/user/add-ip-item')
-        const data = await result.json()
-        setIpData(data.data)
+        try {
+            const result = await fetch('/api/user/ip-item-controller');
+            const { ipAddressesData } = await result.json();
+            if (!result.ok) {
+                const { message } = await result.json()
+                throw new Error(message);
+            }
+            setIpData(ipAddressesData);
+        } catch (err) {
+            dispatch(setError(err));
+        }
     }
 
     const addItemToCollection = async (ipAddressData) => {
-        const result = await fetch('/api/user/add-ip-item', {
-            method: 'POST',
-            body: JSON.stringify(ipAddressData),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-
-        const data = await result.json()
-        console.log(data);
-
-
-        // TRY CATCH TUTAJ I DAĆ ISERROR USESTATE
-        // tworzenie useReducera na wzór the-dojo i tutaj sobie robic CRUD i odwolywac sie do poszczegolnych scieżek w API
+        try {
+            const result = await fetch('/api/user/ip-item-controller', {
+                method: 'POST',
+                body: JSON.stringify(ipAddressData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            const { message } = await result.json()
+            if (!result.ok) throw new Error(message);
+            dispatch(setSuccess(message))
+        } catch (err) {
+            dispatch(setError(err.message));
+        }
     }
 
     const deleteItemFromCollection = async (ipAddressData) => {
-        const result = await fetch('/api/user/add-ip-item', {
-            method: 'DELETE',
-            body: JSON.stringify(ipAddressData),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        const data = await result.json();
-        console.log(data);
+        try {
+            const result = await fetch('/api/user/ip-item-controller', {
+                method: 'DELETE',
+                body: JSON.stringify(ipAddressData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            const { message } = await result.json()
+            if (!result.ok) throw new Error(message);
+            dispatch(setSuccess(message))
+        } catch (err) {
+            dispatch(setError(err.message));
+        }
     }
 
     return { ipData, getItemsFromCollection, addItemToCollection, deleteItemFromCollection }

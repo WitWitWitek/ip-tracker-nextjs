@@ -34,3 +34,14 @@
     color: $veryDarkGray;
     background-color: $boardColor;
 }
+
+@mixin form-btn($borderColor: $boardColor, $fontColor: $boardColor, $bgColor: transparent) {
+    width: 100%;
+    border: 2px solid $borderColor;
+    color: $fontColor;
+    background-color: $bgColor;
+    height: 2.5rem;
+    margin: 0.75rem auto;
+    border-radius: 1.5rem;
+    cursor: pointer;
+}

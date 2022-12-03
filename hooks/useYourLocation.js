@@ -1,3 +1,4 @@
+import { setError } from "../context/alertSlice"
 import { useDispatch } from "react-redux"
 import { coordsActions } from "../context/coordsSlice"
 
@@ -22,11 +23,8 @@ export const useYourLocation = () => {
                 isp
             }))
         },
-        err => alert(err.message)
-        )
-
-
-        
+        err => dispatch(setError(err.message))
+        ) 
     }
 
     return { setUserPosition }

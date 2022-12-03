@@ -1,38 +1,25 @@
 import { useRef } from "react"
-import { changePasswordHandler } from '../../lib/changePassword'
+import { useChangePassword } from "../../hooks/useChangePassword"
 
 export default function ChangePasswordForm() {
+    const { changePasswordSuccess, changePasswordError, changePasswordHandler } = useChangePassword()
     const oldPasswordInputRef =  useRef('')
     const newPasswordInputRef =  useRef('')
     const newPasswordRepeatInputRef =  useRef('')
 
-    const formHandler = e => {
-        e.preventDefault()
+    const formHandler = async e => {
+        e.preventDefault();
         const enteredOldPassword = oldPasswordInputRef.current.value
         const enteredNewPassword = newPasswordInputRef.current.value
         const enteredNewPasswordRepeat = newPasswordRepeatInputRef.current.value
-        
-        try {
-            if (enteredNewPassword !== enteredNewPasswordRepeat) {
-                throw new Error('New passwords mismatch.');
-            }
-    
-            const passwordData = {
-                oldPassword: enteredOldPassword,
-                newPassword: enteredNewPassword 
-            }
-    
-            changePasswordHandler(passwordData)
-        } catch(err) {
-            alert(err)
-        }
-    
+     
+        await changePasswordHandler(enteredOldPassword, enteredNewPassword, enteredNewPasswordRepeat);
         oldPasswordInputRef.current.value = ''
         newPasswordInputRef.current.value = ''
         newPasswordRepeatInputRef.current.value = ''
     }
 
-    const authFormClass = `auth-form__form-input ` //${error ? 'error' : ''}
+    const authFormClass = `auth-form__form-input ${changePasswordError ? 'input-error' : ''}`
 
     return (
            <div className="auth-form__container">
@@ -50,6 +37,8 @@ export default function ChangePasswordForm() {
                             <input className={authFormClass} type="password" id="new-password-repeat" ref={newPasswordRepeatInputRef}/>
                         </div>
                         <button className="auth-form__form-button"  type="submit">Change password</button>
+                        {changePasswordError && <p className="auth-form__auth-error">{changePasswordError}</p>}
+                        {changePasswordSuccess && <p className="auth-form__auth-success">{changePasswordSuccess}</p>}
                 </form>
            </div>
     )

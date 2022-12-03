@@ -4,7 +4,7 @@ import { coordsActions } from "../context/coordsSlice"
 
 export const useIpDetails = () => {
     const dispatch = useDispatch()
-    const [iPerror, setIpError] = useState(null)
+    const [ipError, setIpError] = useState(null)
 
     const fetchIpDetails = async (ip) => {
             setIpError(null)
@@ -21,15 +21,13 @@ export const useIpDetails = () => {
                 setIpError(wrongResponse.message || 'Something went wrong.')
                 return;
             }
-            const dataFetched = await response.json()
-            const { data } = dataFetched
-            console.log(data);
-            dispatch(coordsActions.updateCoords(data))
+            const { ipData } = await response.json()
+            dispatch(coordsActions.updateCoords(ipData))
     }
     
 
         return {
             fetchIpDetails,
-            iPerror
+            ipError
         }
 }

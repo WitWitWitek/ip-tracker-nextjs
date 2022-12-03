@@ -19,7 +19,7 @@ export default NextAuth({
                 const isValid = await verifyPassword(credentials.password, user.password);
 
                 if (!isValid) {
-                    throw new Error('Could not log you in!');ƒ
+                    throw new Error('Could not log you in! Type correct password.');
                 }
 
                 client.close();
@@ -37,5 +37,5 @@ export default NextAuth({
     },
     jwt: {
         maxAge: 10 * 60,
-    }
+    },
 })

@@ -1,0 +1,41 @@
+@use './colors' as *;
+
+.ip-tracker {
+    &__alert {
+        color: $boardColor;
+        font-size: 2rem;
+        padding: 20px;
+        position: fixed;
+        width: 100%;
+        text-align: center;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+    }
+}
+
+.error {
+    background-color: red;
+    animation: alert-animation 10s forwards;
+}
+
+.success {
+    background-color: green;
+    animation: alert-animation 10s forwards;
+}
+
+@keyframes alert-animation {
+    0% {
+        opacity: 0;
+        visibility: hidden;
+    }
+    20% {
+        opacity: 1;
+        visibility: visible;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}

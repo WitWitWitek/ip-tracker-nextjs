@@ -40,6 +40,7 @@ export default async function handler (req, res) {
             username,
             email,
             password: hashedPassword,
+            ipItems: [],
         })
         
         res.status(201).json({message: 'Created user! Please log in.'})

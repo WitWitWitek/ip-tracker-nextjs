@@ -1,5 +1,6 @@
 @use './colors' as *;
 @use './buttons' as *;
+@use './alert.scss' as *;
 
 .ip-tracker {
     &__user-page {
@@ -77,6 +78,7 @@
         &-form-wrapper {
             height: min-content;
             width: 100%;
+            padding: 2rem;
             display: flex;
             justify-content: center;
             animation: show-password-form 0.5s forwards;
@@ -93,3 +95,11 @@
         transform: translateY(0%);
     }
 }
+
+@media screen and (min-width: 576px) {
+    .ip-tracker {
+        &__user-page-form-wrapper {
+            width: 80%;
+        }
+    }
+  }
