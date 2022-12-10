@@ -15,7 +15,6 @@ export default function NotFound() {
             clearInterval(counterInterval)
             router.push('/auth')
         }
-        
         return () => {
             clearInterval(counterInterval)
           }

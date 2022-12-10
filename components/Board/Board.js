@@ -5,7 +5,7 @@ import AddItemBtn from "../AddItemBtn/AddItemBtn";
 import DeleteItemBtn from "../DeleteItemBtn/DeleteItemBtn";
 import ShowOnMapBtn from "../ShowOnMapBtn/ShowOnMapBtn";
 
-export default function Board({ipData}) {
+export default function Board({ipData, deleteHandler}) {
     const router = useRouter()
     const dispatch = useDispatch()
 
@@ -35,7 +35,7 @@ export default function Board({ipData}) {
             {router.pathname.includes('/user/')  && (
                 <li className='ip-tracker__board-item'>
                     <ShowOnMapBtn loadToMapHandler={loadToMapHandler}/>
-                    <DeleteItemBtn selectedIpObject={ipData} />
+                    <DeleteItemBtn selectedIpObject={ipData} deleteHandler={deleteHandler} />
                 </li>
             )}
             {router.pathname === '/' && <AddItemBtn />}

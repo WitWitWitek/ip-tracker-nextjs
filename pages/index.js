@@ -16,7 +16,6 @@ const Map = dynamic(() => import("../components/Map/Map"), { ssr:false })
 export default function HomePage() { 
   const { data: session, status } = useSession()
   const coords = useSelector(state => state.coords);
-  const { success, error } = useSelector(state => state.alert)
   const router = useRouter()
   const [userId, setUserId] = useState(null);
 
@@ -29,6 +28,9 @@ export default function HomePage() {
     }
   }, [status, session, router])
   
+  if (status !== 'authenticated')  {
+    return <p>Loading...</p>
+  }
 
   return (
    <>

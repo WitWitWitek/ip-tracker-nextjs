@@ -6,11 +6,11 @@ import ChangePasswordForm from "../ChangePasswordForm/ChangePasswordForm";
 import IpItemsList from "../IpItemsList/IpList";
 import Alert from '../Alert/Alert';
 
-export default function UserPage({username, ipData}) {
+export default function UserPage({username}) {
   const [isFormOpen, setFormOpen] = useState(false);
   const { status } = useSession()
   const router = useRouter()
-  
+
   useEffect(() => {
     if (status === 'unauthenticated') {
       router.replace('/auth')
@@ -31,7 +31,7 @@ export default function UserPage({username, ipData}) {
           </div>
         )}
         <Alert />
-        <IpItemsList ipData={ipData} />
+        <IpItemsList />
     </section>
   )
 }

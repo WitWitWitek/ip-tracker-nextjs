@@ -38,17 +38,16 @@ export async function getStaticProps({params}) {
             username: params.user,
             ipData: user.ipItems || null
         },
-        revalidate: 1,
     }
 }
 
-export default function User({ipData, username}) {    
+export default function User({username}) {
     return (
         <>
-        <Head>
-            <title>IP Adress Tracker | User Page</title>
-        </Head>
-        <UserPage ipData={ipData} username={username} />
+            <Head>
+                <title>IP Adress Tracker | User Page</title>
+            </Head>
+            <UserPage username={username} />
         </>
     )
 }

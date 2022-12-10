@@ -17,25 +17,8 @@
 
 .error {
     background-color: red;
-    animation: alert-animation 10s forwards;
 }
 
 .success {
     background-color: green;
-    animation: alert-animation 10s forwards;
-}
-
-@keyframes alert-animation {
-    0% {
-        opacity: 0;
-        visibility: hidden;
-    }
-    20% {
-        opacity: 1;
-        visibility: visible;
-    }
-    100% {
-        opacity: 0;
-        visibility: hidden;
-    }
 }

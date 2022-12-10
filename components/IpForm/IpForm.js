@@ -13,7 +13,6 @@ export default function IpForm() {
         fetchIpDetails(IP)
         inputValue.current.value = ''
     }
-    
 
    const showUserPosition = () => {
         setUserPosition()

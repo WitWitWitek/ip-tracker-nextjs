@@ -25,9 +25,8 @@ export const useIpDetails = () => {
             dispatch(coordsActions.updateCoords(ipData))
     }
     
-
-        return {
-            fetchIpDetails,
-            ipError
-        }
+    return {
+        fetchIpDetails,
+        ipError
+    }
 }

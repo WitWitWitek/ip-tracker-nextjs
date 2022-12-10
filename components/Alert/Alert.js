@@ -20,13 +20,14 @@ export default function Alert() {
             setAlertClasses(`ip-tracker__alert`);
             setContent(null);
         }
-    }, [success, error])
-    
-    setTimeout(() => {
-        setContent(null)
-        dispatch(setError(null))
-        dispatch(setSuccess(null))
-    }, 7000)
+        const clearStates = setTimeout(() => {
+            setContent(null)
+            dispatch(setError(null))
+            dispatch(setSuccess(null))
+        }, 7000)
+
+        return () => clearTimeout(clearStates)
+        }, [success, error])
 
     return (
         <>

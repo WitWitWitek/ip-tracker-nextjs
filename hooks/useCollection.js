@@ -4,7 +4,7 @@ import { useState } from "react"
 
 export const useColletion = () => {
     const dispatch = useDispatch()
-    const [ipData, setIpData] = useState(null);
+    const [ipData, setIpData] = useState([]);
 
     const getItemsFromCollection = async () => {
         try {
@@ -14,7 +14,7 @@ export const useColletion = () => {
                 const { message } = await result.json()
                 throw new Error(message);
             }
-            setIpData(ipAddressesData);
+            setIpData(ipAddressesData)
         } catch (err) {
             dispatch(setError(err));
         }
@@ -46,8 +46,9 @@ export const useColletion = () => {
                     'Content-Type': 'application/json'
                 }
             })
-            const { message } = await result.json()
+            const { message, ipAddressesData } = await result.json()
             if (!result.ok) throw new Error(message);
+            setIpData(ipAddressesData)
             dispatch(setSuccess(message))
         } catch (err) {
             dispatch(setError(err.message));

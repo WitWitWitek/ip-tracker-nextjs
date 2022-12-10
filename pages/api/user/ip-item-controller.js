@@ -79,7 +79,7 @@ export default async function handler (req, res) {
             {$set: {ipItems: ipDeleted}}
         )
 
-        res.status(201).json({message: 'Selected IP successfully removed from your list of favourites.'})
+        res.status(201).json({message: 'Selected IP successfully removed from your list of favourites.', ipAddressesData: ipDeleted})
         client.close()
     }
 }
